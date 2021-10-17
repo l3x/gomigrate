@@ -6,17 +6,15 @@ A SQL database migration toolkit in Golang.
 
 ## Supported databases
 
-- PostgreSQL
 - MariaDB
 - MySQL
-- Sqlite3
 
 ## Usage
 
 First import the package:
 
 ```go
-import "github.com/DavidHuie/gomigrate"
+import "bitbucket.org/lsheehan/gomigrate-mysql"
 ```
 
 Given a `database/sql` database connection to a PostgreSQL database, `db`,

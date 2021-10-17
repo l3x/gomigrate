@@ -8,8 +8,8 @@ import (
 	"testing"
 
 	_ "github.com/go-sql-driver/mysql"
-	_ "github.com/lib/pq"
-	_ "github.com/mattn/go-sqlite3"
+	//_ "github.com/lib/pq"
+	//_ "github.com/mattn/go-sqlite3"
 )
 
 var (
@@ -30,14 +30,14 @@ func GetMigrator(test string) *Migrator {
 func TestNewMigrator(t *testing.T) {
 	m := GetMigrator("test1")
 	switch {
-	case dbType == "pg" && len(m.migrations) != 4:
-		t.Errorf("Invalid number of migrations detected")
+	//case dbType == "pg" && len(m.migrations) != 4:
+	//	t.Errorf("Invalid number of migrations detected")
 
 	case dbType == "mysql" && len(m.migrations) != 1:
 		t.Errorf("Invalid number of migrations detected")
 
-	case dbType == "sqlite3" && len(m.migrations) != 1:
-		t.Errorf("Invalid number of migrations detected")
+	//case dbType == "sqlite3" && len(m.migrations) != 1:
+	//	t.Errorf("Invalid number of migrations detected")
 	}
 
 	migration := m.migrations[1]
@@ -157,16 +157,11 @@ func init() {
 		log.Print("Using mysql")
 		adapter = Mariadb{}
 		db, err = sql.Open("mysql", "gomigrate:password@/gomigrate")
-	case "sqlite3":
-		dbType = "sqlite3"
-		log.Print("Using sqlite3")
-		adapter = Sqlite3{}
-		db, err = sql.Open("sqlite3", "file::memory:?cache=shared")
 	default:
-		dbType = "pg"
-		log.Print("Using postgres")
-		adapter = Postgres{}
-		db, err = sql.Open("postgres", "host=localhost dbname=gomigrate sslmode=disable")
+		dbType = "mysql"
+		log.Print("Using mysql")
+		adapter = Mariadb{}
+		db, err = sql.Open("mysql", "gomigrate:password@/gomigrate")
 	}
 
 	if err != nil {
